@@ -23,18 +23,18 @@ public class ContactBookService {
     this.user="akhil.t";
     this.password="wewillcode";
   }
-  public Connection connect() {
-    try {
-      Class.forName("org.postgresql:postgresql:9.4.1207.jre7");
-      conn = DriverManager.getConnection(url, user, password);
-      System.out.println("Connected to the PostgreSQL server successfully.");
-    } catch (SQLException e) {
-      System.out.println(e.getMessage());
-    } catch (ClassNotFoundException e) {
-      e.printStackTrace();
-    }
-    return conn;
-  }
+//  public Connection connect() {
+//    try {
+//      Class.forName("org.postgresql:postgresql:9.4.1207.jre7");
+//      conn = DriverManager.getConnection(url, user, password);
+//      System.out.println("Connected to the PostgreSQL server successfully.");
+//    } catch (SQLException e) {
+//      System.out.println(e.getMessage());
+//    } catch (ClassNotFoundException e) {
+//      e.printStackTrace();
+//    }
+//    return conn;
+//  }
 
   public void closeConnection (){
     conn=null;
@@ -61,7 +61,7 @@ public class ContactBookService {
   }
 
   public boolean registerUser(String userId, String password,String username) throws SQLException {
-    Connection connection = connect();
+    Connection connection = DriverManager.getConnection(url, user, password);;
     PreparedStatement st =
         connection.prepareStatement(
             "Insert into users (username , userid, password ) Values (?,?,?)");
@@ -81,7 +81,7 @@ public class ContactBookService {
 
   public boolean addContact(String name, String emailAddress, String phoneNumber, String userId)
       throws SQLException {
-    Connection connection = connect();
+    Connection connection = DriverManager.getConnection(url, user, password);;
     PreparedStatement st =
         connection.prepareStatement(
             "Insert into contactbook (name , emailaddress, phonenumber , userid ) Values (?,?,?,?)");
@@ -101,7 +101,7 @@ public class ContactBookService {
 
   public boolean deleteContact(String name,String emailAddress ,String phoneNumber,String userId)
       throws SQLException {
-    Connection connection = connect();
+    Connection connection = DriverManager.getConnection(url, user, password);;
     PreparedStatement st =
         connection.prepareStatement(
             "delete  from  contactbook where  name =?  and  emailaddress = ? and phonenumber = ? and  userid= ? ");
@@ -121,7 +121,7 @@ public class ContactBookService {
 
   public boolean updateContactPhoneNumber(String name,String emailAddress ,String phoneNumber,String userId)
       throws SQLException {
-    Connection connection = connect();
+    Connection connection = DriverManager.getConnection(url, user, password);;
     PreparedStatement st =
         connection.prepareStatement(
             "update    contactbook set  phonenumber =?  where   emailaddress = ? and name = ? and  userid= ? ");

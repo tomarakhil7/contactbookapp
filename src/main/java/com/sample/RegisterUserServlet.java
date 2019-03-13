@@ -16,13 +16,11 @@ import java.io.IOException;
 public class RegisterUserServlet extends HttpServlet {
   private  ContactBookService contactBookService;
   @Inject
-  public RegisterUserServlet(ContactBookService contactBookService)
+  public RegisterUserServlet()
   {
     this.contactBookService= new ContactBookService();
   }
 
-  public RegisterUserServlet(){
-  }
 
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp)
