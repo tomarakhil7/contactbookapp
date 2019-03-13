@@ -1,0 +1,9 @@
+com/sample/Main.class
+com/sample/RegisterUserServlet.class
+com/sample/Database.class
+com/sample/doLogoutServlet.class
+com/sample/DoLoginServlet.class
+com/sample/ContactBookService.class
+com/sample/DeleteContactServlet.class
+com/sample/BasicModule.class
+com/sample/AddContactServlet.class

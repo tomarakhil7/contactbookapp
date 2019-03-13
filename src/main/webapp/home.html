@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+</head>
+<body>
+<center>
+  <h1>
+    Welcome to Contact Book
+  </h1>
+
+  <form action="/logout" method="post">
+    <input type="submit" name="logout " value="Logout" />
+  </form>
+
+
+  <form action="/addContact" method="post">
+    Name:<br>
+    <input type="text" name="Name"><br>
+    Email:<br>
+    <input type="text" name="EmailAddress">
+    PhoneNumber:<br>
+    <input type="text" name="PhoneNumber">
+    <input type="submit" name="addcontact " value="Add Contact" />
+  </form>
+
+  <form action="/deleteContact" method="post">
+    Name:<br>
+    <input type="text" name="Name"><br>
+    Email:<br>
+    <input type="text" name="EmailAddress">
+    PhoneNumber:<br>
+    <input type="text" name="PhoneNumber">
+    <input type="submit" name="deleteContact " value="Delete Contact" />
+  </form>
+
+</center>
+
+
+</body>
+</html>
