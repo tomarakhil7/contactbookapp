@@ -7,6 +7,6 @@ public class BasicModule extends AbstractModule {
   @Override
   protected void configure() {
     bind(Database.class).to(Database.class);
-    bind(ContactBookService.class).toInstance(new ContactBookService(new Database()));
+    bind(ContactBookService.class).to(ContactBookService.class);
   }
 }

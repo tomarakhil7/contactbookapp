@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,16 +12,39 @@ import java.sql.Statement;
 
 
 public class ContactBookService {
-  public Database database;
+  private final String url;
+  private final String user;
+  private final String password;
+  private Connection conn;
 
   @Inject
-  ContactBookService(Database database) {
-    this.database = database;
+  ContactBookService() {
+    this.url="jdbc:postgresql://localhost:5432/contactbookapp";
+    this.user="akhil.t";
+    this.password="wewillcode";
+  }
+  public Connection connect() {
+    try {
+      Class.forName("org.postgresql:postgresql:9.4.1207.jre7");
+      conn = DriverManager.getConnection(url, user, password);
+      System.out.println("Connected to the PostgreSQL server successfully.");
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    } catch (ClassNotFoundException e) {
+      e.printStackTrace();
+    }
+    return conn;
+  }
+
+  public void closeConnection (){
+    conn=null;
   }
 
 
+
   public boolean validateUser(String userId, String password) throws SQLException {
-    Connection connection = database.connect();
+    Connection connection = connect();
+    System.out.println(connection);
     Statement st = connection.createStatement();
     String queryToValidate =
         "select * from  users where userid =" + userId + " and  password = " + password;
@@ -29,15 +53,15 @@ public class ContactBookService {
       System.out.println("User-Id : " + rs.getString(1));
     } else {
       System.out.println("No such user id is already registered");
-      database.closeConnection();
+      closeConnection();
       return false;
     }
-    database.closeConnection();
+    closeConnection();
     return true;
   }
 
   public boolean registerUser(String userId, String password,String username) throws SQLException {
-    Connection connection = database.connect();
+    Connection connection = connect();
     PreparedStatement st =
         connection.prepareStatement(
             "Insert into users (username , userid, password ) Values (?,?,?)");
@@ -49,7 +73,7 @@ public class ContactBookService {
     if (rows > 0) System.out.println("Successfully Registered");
     else System.out.println("Registration Failed");
 
-    database.closeConnection();
+    closeConnection();
     return true;
   }
 
@@ -57,7 +81,7 @@ public class ContactBookService {
 
   public boolean addContact(String name, String emailAddress, String phoneNumber, String userId)
       throws SQLException {
-    Connection connection = database.connect();
+    Connection connection = connect();
     PreparedStatement st =
         connection.prepareStatement(
             "Insert into contactbook (name , emailaddress, phonenumber , userid ) Values (?,?,?,?)");
@@ -71,13 +95,13 @@ public class ContactBookService {
     if (rows > 0) System.out.println("Successfully Inserted");
     else System.out.println("Insert Failed");
 
-    database.closeConnection();
+   closeConnection();
     return true;
   }
 
   public boolean deleteContact(String name,String emailAddress ,String phoneNumber,String userId)
       throws SQLException {
-    Connection connection = database.connect();
+    Connection connection = connect();
     PreparedStatement st =
         connection.prepareStatement(
             "delete  from  contactbook where  name =?  and  emailaddress = ? and phonenumber = ? and  userid= ? ");
@@ -91,13 +115,13 @@ public class ContactBookService {
     if (rows > 0) System.out.println("Successfully Deleted");
     else System.out.println("Deletion  Failed");
 
-    database.closeConnection();
+    closeConnection();
     return true;
   }
 
   public boolean updateContactPhoneNumber(String name,String emailAddress ,String phoneNumber,String userId)
       throws SQLException {
-    Connection connection = database.connect();
+    Connection connection = connect();
     PreparedStatement st =
         connection.prepareStatement(
             "update    contactbook set  phonenumber =?  where   emailaddress = ? and name = ? and  userid= ? ");
@@ -111,7 +135,7 @@ public class ContactBookService {
     if (rows > 0) System.out.println("Successfully updated phonenumber");
     else System.out.println("updation  Failed");
 
-    database.closeConnection();
+    closeConnection();
     return true;
   }
 }

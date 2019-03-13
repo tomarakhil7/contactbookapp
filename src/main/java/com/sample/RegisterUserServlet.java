@@ -18,7 +18,7 @@ public class RegisterUserServlet extends HttpServlet {
   @Inject
   public RegisterUserServlet(ContactBookService contactBookService)
   {
-    this.contactBookService= contactBookService;
+    this.contactBookService= new ContactBookService();
   }
 
   public RegisterUserServlet(){

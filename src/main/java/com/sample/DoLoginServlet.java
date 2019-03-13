@@ -16,12 +16,9 @@ import java.io.IOException;
 public class DoLoginServlet extends HttpServlet {
   private ContactBookService contactBookService;
   @Inject
-  public DoLoginServlet(ContactBookService contactBookService)
+  public DoLoginServlet()
   {
-    this.contactBookService=contactBookService;
-  }
-
-  public DoLoginServlet(){
+    this.contactBookService= new ContactBookService();
   }
 
   @Override

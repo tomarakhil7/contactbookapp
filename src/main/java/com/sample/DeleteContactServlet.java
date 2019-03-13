@@ -16,14 +16,11 @@ import java.io.IOException;
 public class  DeleteContactServlet extends HttpServlet {
   private  ContactBookService contactBookService;
   @Inject
-  public DeleteContactServlet(ContactBookService contactBookService)
+  public DeleteContactServlet()
   {
-    this.contactBookService= contactBookService;
+    this.contactBookService= new ContactBookService();
   }
 
-  public DeleteContactServlet(){
-
-  }
 
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp)
