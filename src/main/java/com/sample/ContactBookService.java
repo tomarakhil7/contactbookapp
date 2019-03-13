@@ -43,12 +43,12 @@ public class ContactBookService {
 
 
   public boolean validateUser(String userId, String password) throws SQLException {
-    Connection connection = connect();
+    Connection connection = DriverManager.getConnection(url, user, password);
     System.out.println(connection);
-    Statement st = connection.createStatement();
-    String queryToValidate =
-        "select * from  users where userid =" + userId + " and  password = " + password;
-    ResultSet rs = st.executeQuery(queryToValidate);
+    PreparedStatement st = connection.prepareStatement("select * from users where userid =? and password = ?");
+    st.setString(1,userId);
+    st.setString(2,password);
+    ResultSet rs = st.executeQuery();
     if (rs.next()) {
       System.out.println("User-Id : " + rs.getString(1));
     } else {
